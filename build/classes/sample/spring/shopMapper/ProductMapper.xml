@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2009-2022 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          https://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.apache.ibatis.autoconstructor.AutoConstructorMapper">
+	<!-- SELECT ===================================== -->
+	<!-- 카테고리별 브랜드 추출 -->
+	<select id="categories" resultType="String" parameterType="String">
+		select distinct product_brand
+		from SHOP_PRODUCT
+		where product_category = #{product_category}
+	</select>
+	
+	<!-- 상품 번호 추출 -->
+	<select id="productMaxNo" resultType="int">
+		select MAX(product_code) as NUM
+		from SHOP_PRODUCT
+	</select>
+	
+	<!-- 카테고리 상품 목록 반환 -->
+	<select id="categorySel" resultType="sample.spring.dto.ShopProductDTO">
+		select *
+		from SHOP_PRODUCT
+		where product_category = #{product_category}
+	</select>
+	
+	<!-- 브랜드 상품 목록 반환 >> 쓴 기억이 없음. -->
+	<select id="brandSel" resultType="sample.spring.dto.ShopProductDTO">
+		select *
+		from SHOP_PRODUCT
+		where product_brand = #{product_brand}
+	</select>
+	
+	<!-- 카테고리에서 브랜드 선택 시 출력되는 상품 -->
+	<select id="categoryToBrandSel" resultType="sample.spring.dto.ShopProductDTO">
+		select *
+		from SHOP_PRODUCT
+		where product_category = #{product_category}
+		AND product_brand = #{product_brand}
+	</select>
+	
+	<!-- 상품 DTO -->
+	<select id="getProduct" resultType="sample.spring.dto.ShopProductDTO">
+		select * 
+		from SHOP_PRODUCT
+		where product_code = #{product_code}
+	</select>
+	
+	<!-- 구매율 TOP 5 상품 목록 -->
+	<select id="getTop5" resultType="Integer">
+		select buy_productcode, COUNT(*) AS purchase_count
+		from SHOP_BUY
+		group by buy_productcode
+		order by purchase_count DESC
+	</select>
+	
+	<!-- 특정 가격 이하 상품 -->
+	<select id="lessThanPrice" resultType="sample.spring.dto.ShopProductDTO">
+		select *
+		from SHOP_PRODUCT
+		where product_price between 0 and #{product_price}
+	</select>
+	
+	<!-- 상품 코드 리스트 -->
+	<select id="product_codes" resultType="Integer">
+		select *
+		from SHOP_PRODUCT
+	</select>
+	
+	<!-- 검색 단어를 포함하는 상품 리스트 -->
+	<select id="searchProductName" resultType="sample.spring.dto.ShopProductDTO">
+		select *
+		from SHOP_PRODUCT
+		where product_name like '%'||#{product_name}||'%'
+		or product_brand like '%'||#{product_name}||'%'
+	</select>
+	
+	<!-- 상품명 자동완성 -->
+	<select id="autoCompleteName" resultType="sample.spring.dto.ShopProductDTO">
+		select distinct product_name
+		from SHOP_PRODUCT
+		where product_name like '%'||#{product_name}||'%'
+		or product_brand like '%'||#{product_name}||'%'
+	</select>
+	
+	<!-- INSERT ===================================== -->
+	<insert id="raiseProduct" parameterType="sample.spring.dto.ShopProductDTO">
+		insert into SHOP_PRODUCT
+		values(
+			#{product_code},
+			#{product_category},
+			#{product_brand},
+			#{product_name},
+			#{product_price},
+			#{product_explain},
+			#{product_seller},
+			sysdate,
+			#{product_img}
+		)
+	</insert>
+	<!-- UPDATE ===================================== -->
+	
+	<!-- DELETE ===================================== -->
+	
+</mapper>

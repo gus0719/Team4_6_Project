@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="org.apache.ibatis.autoconstructor.AutoConstructorMapper">
+    
+    <select id="bodSel" resultType="sample.spring.dto.ShopNotificationDTO">
+    select * 
+    from shop_notification 
+    order by NOTIFICATION_date DESC		
+	</select>
+	
+    <select id="getbod" resultType="sample.spring.dto.ShopNotificationDTO">
+    select * 
+    from shop_notification 
+    where notification_No = #{notification_No}		
+	</select>
+	
+	<delete id = "bodDel" parameterType="sample.spring.dto.ShopNotificationDTO">
+		DELETE 
+		FROM SHOP_NOTIFICATION 
+		WHERE notification_No = #{notification_No}
+	</delete>
+	
+	<select id="bodMaxnum" resultType="Integer">
+		select max(Notification_No) as num from SHOP_NOTIFICATION
+	</select>
+	
+	<insert id ="bodIns" parameterType="sample.spring.dto.ShopNotificationDTO">
+		insert into SHOP_NOTIFICATION(notification_no, notification_subject, notification_id, notification_content, notification_date)
+		values(
+			#{notification_No},
+			#{notification_Subject},
+			#{notification_Id},
+			#{notification_Content},
+			SYSDATE
+		)
+	</insert>
+	
+	<update id ="bodUpd" parameterType="sample.spring.dto.ShopNotificationDTO">
+		update SHOP_NOTIFICATION SET		
+		notification_Subject=#{notification_Subject}, 		
+		notification_Content=#{notification_Content}
+		WHERE notification_No = #{notification_No}		
+		
+	</update>
+    
+    </mapper>

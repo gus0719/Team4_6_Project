@@ -19,6 +19,7 @@
   <dd>Java</dd>
   <dd>JSP</dd>
   <dd>Servlet</dd>
+  <dd>JSTL</dd>
   <dd>AJAX</dd>
   
   <dt>DataBase</dt>
@@ -28,6 +29,7 @@
   <dd>Tomcat 8.5</dd>
   
   <dt>Framework</dt>
+  <dd>Spring</dd>
   <dd>MyBatis</dd>
   
   <dt>IDE</dt>

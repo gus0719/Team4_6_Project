@@ -1,5 +1,5 @@
 <h1>MVC 패턴을 적용한 쇼핑몰 구축</h1>
-<img src = "">
+<img src = "https://github.com/gus0719/Team4_6_Project/blob/main/spring_mvc_shop.svg">
 <h2>목차</h2>
 <ul>
   <li><a href="#skill">사용 기술</a></li>
